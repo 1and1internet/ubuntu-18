@@ -1,4 +1,4 @@
-# Ubuntu 16.04 LTS (Xenial Xerus) Docker Image
+# Ubuntu 18.04 LTS (Bionic Beaver) Docker Image
 
 This image provides a standard ubuntu docker base image for other docker images to build on top of.
 
@@ -27,7 +27,7 @@ You can easily extend the behavour of this image in the following ways
 
 ## Usage
 
-1. Make a Dockerfile and specify `1and1internet/ubuntu-16` on the `FROM` line.
+1. Make a Dockerfile and specify `1and1internet/ubuntu-18` on the `FROM` line.
 2. Anything you want run in the container should be started by supervisord. 
 3. Use a directory called files if you need to copy files in to your new image (see Dockerfile for this image as an example).
 
