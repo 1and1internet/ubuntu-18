@@ -1,0 +1,14 @@
+deb http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic main restricted
+deb-src http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic main restricted
+deb http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-updates main restricted
+deb-src http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-updates main restricted
+deb  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic universe
+deb-src  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic universe
+deb  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-updates universe
+deb-src  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-updates universe
+deb  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-security main restricted
+deb-src http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-security main restricted
+deb  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-security universe
+deb-src  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-security universe
+deb  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-security multiverse
+deb-src  http://mirrorservice.org/sites/archive.ubuntu.com/ubuntu/ bionic-security multiverse
