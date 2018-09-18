@@ -28,7 +28,7 @@ You can easily extend the behavour of this image in the following ways
 ## Usage
 
 1. Make a Dockerfile and specify `1and1internet/ubuntu-18` on the `FROM` line.
-2. Anything you want run in the container should be started by supervisord. 
+2. Anything you want run in the container should be started by supervisord.
 3. Use a directory called files if you need to copy files in to your new image (see Dockerfile for this image as an example).
 
 ## Building and testing
@@ -47,3 +47,5 @@ The tests depend on shared testing code found in its own git repository called [
 To use a different tests repository set the TESTS_REPO variable to the git URL for the alternative repository. e.g. `make TESTS_REPO=https://github.com/1and1internet/drone-tests.git`
 
 To use a locally modified copy of the tests repository set the TESTS_LOCAL variable to the absolute path of where it is located. This variable will override the TESTS_REPO variable. e.g. `make TESTS_LOCAL=/tmp/github/1and1internet/drone-tests/`
+
+.
