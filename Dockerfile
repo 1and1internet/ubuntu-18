@@ -1,5 +1,5 @@
 FROM ubuntu:bionic
-MAINTAINER brian.wojtczak@1and1.co.uk
+MAINTAINER brian.wilkinson@1and1.co.uk
 ARG DEBIAN_FRONTEND=noninteractive
 COPY files/ /
 RUN \
