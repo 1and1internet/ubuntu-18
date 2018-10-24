@@ -21,13 +21,12 @@ COPY --from=configurability /go/src/github.com/1and1internet/configurability/bin
 RUN \
 	update-alternatives --install /usr/bin/supervisord supervisord /usr/bin/supervisorgo 1 && \
   apt-get -y update && apt-get -y upgrade && \
-  apt-get -o Dpkg::Options::=--force-confdef -y install supervisor curl netcat wget telnet vim bzip2 ssmtp locales python-pip && \
+  apt-get -o Dpkg::Options::=--force-confdef -y install curl netcat wget telnet vim bzip2 ssmtp locales python-pip && \
   locale-gen en_GB.utf8 en_US.utf8 es_ES.utf8 de_DE.UTF-8 && \
   mkdir --mode 777 -p /var/log/supervisor && \
   chmod -R 777 /var/run /var/log /etc/ssmtp /etc/passwd /etc/group && \
   mkdir --mode 777 -p /tmp/sockets && \
   chmod -R 755 /init /hooks && \
-  chmod 755 /etc/supervisor/exit_on_fatal.py && \
   apt-get -y clean && \
   rm -rf /var/lib/apt/lists/*
 ENV \
@@ -40,4 +39,4 @@ ENV \
   SMTP_DOMAIN="" \
   SMTP_RELAYHOST=""
 ENTRYPOINT ["/bin/bash", "-e", "/init/entrypoint"]
-CMD ["run"]
+CMD ["/init/supervisord"]
