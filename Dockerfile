@@ -24,7 +24,7 @@ RUN \
   apt-get -o Dpkg::Options::=--force-confdef -y install curl netcat wget telnet vim bzip2 ssmtp locales python-pip && \
   locale-gen en_GB.utf8 en_US.utf8 es_ES.utf8 de_DE.UTF-8 && \
   mkdir --mode 777 -p /var/log/supervisor && \
-  chmod -R 777 /var/run /var/log /etc/ssmtp /etc/passwd /etc/group && \
+  chmod -R 777 /var/run /etc/ssmtp /etc/passwd /etc/group && \
   mkdir --mode 777 -p /tmp/sockets && \
   chmod -R 755 /init /hooks && \
   apt-get -y clean && \
