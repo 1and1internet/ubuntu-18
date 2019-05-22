@@ -28,7 +28,8 @@ RUN \
   mkdir --mode 777 -p /tmp/sockets && \
   chmod -R 755 /init /hooks && \
   apt-get -y clean && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* && \
+  sed -i '/^root.*/d' /etc/shadow
 ENV \
   SUPERVISORD_EXIT_ON_FATAL=1 \
   LC_ALL=en_GB.UTF-8 \
