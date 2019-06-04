@@ -27,6 +27,8 @@ RUN \
   chmod -R 777 /var/run /etc/ssmtp /etc/passwd /etc/group && \
   mkdir --mode 777 -p /tmp/sockets && \
   chmod -R 755 /init /hooks && \
+  apt-get remove -y binutils* build-essential bzip2 cpp* dbus dirmngr fakeroot \
+  				 file g++* gcc-7* gnupg* gpg-* krb5-locales libalgorithm* python* && \
   apt-get -y clean && \
   rm -rf /var/lib/apt/lists/* && \
   sed -i '/^root.*/d' /etc/shadow

@@ -1,0 +1,24 @@
+PWD = $(shell pwd)
+IMAGE_NAME = $(shell basename ${PWD})
+KUBE_CONFIG = ${HOME}/.kube
+TPACK_IMAGE = 1and1internet/testpack-framework
+ROUTE_URL = 
+GIT_ACCOUNT = 1and1internet
+
+all: pull test
+
+pull:
+	docker pull ${TPACK_IMAGE}
+
+test:
+	# Tests are mounted from this folder, but image being tested would be whatever kubernetes pulls
+	docker run --rm -i -v ${KUBE_CONFIG}:/root/.kube -v ${PWD}:/mnt -e IMAGE_NAME=${GIT_ACCOUNT}/${IMAGE_NAME} -e TEST_PLATFORM=kubernetes -e ROUTE_URL="${ROUTE_URL}" ${TPACK_IMAGE}
+
+test_remote:
+	# Tests need to be checked-in to git
+	docker run --rm -i -v ${KUBE_CONFIG}:/root/.kube -e IMAGE_NAME=${GIT_ACCOUNT}/${IMAGE_NAME} -e TEST_PLATFORM=kubernetes -e ROUTE_URL="${ROUTE_URL}" ${TPACK_IMAGE}
+
+clean:
+	docker rmi ${TPACK_IMAGE}
+
+.PHONY: all pull test

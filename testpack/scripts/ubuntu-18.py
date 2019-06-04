@@ -1,48 +1,13 @@
 #!/usr/bin/env python3
 
 import unittest
-import os
-import docker
-import json
-import subprocess
-from stat import *
+from testpack_helper_library.unittests.dockertests import Test1and1Common
 
 
-class TestUbuntu18(unittest.TestCase):
-    docker_client = None
-    docker_container = None
-
-    @classmethod
-    def setUpClass(cls):
-        image_to_test = os.getenv("IMAGE_NAME")
-        if image_to_test == "":
-            raise Exception("I don't know what image to test")
-        TestUbuntu18.docker_client = docker.from_env()
-        TestUbuntu18.container = TestUbuntu18.docker_client.containers.run(
-            image=image_to_test,
-            remove=True,
-            detach=True
-        )
-
-    @classmethod
-    def tearDownClass(cls):
-        TestUbuntu18.container.stop()
-
-    def setUp(self):
-        print ("\nIn method", self._testMethodName)
-        self.container = TestUbuntu18.container
-
-    def execRun(self, command):
-        result = self.container.exec_run(command)
-        if isinstance(result, tuple):
-            exit_code = result[0]
-            output = result[1].decode('utf-8')
-        else:
-            output = result.decode('utf-8')
-        return output
+class TestUbuntu18(Test1and1Common):
 
     def assertPackageIsInstalled(self, packageName):
-        op = self.execRun("dpkg -l %s" % packageName)
+        op = self.exec("dpkg -l %s" % packageName)
         self.assertTrue(
             op.find(packageName) > -1,
             msg="%s package not installed" % packageName
@@ -56,7 +21,7 @@ class TestUbuntu18(unittest.TestCase):
             "Executing hook /hooks/entrypoint-pre.d/02_user_group_setup",
             "Executing hook /hooks/supervisord-pre.d/20_configurability"
         ]
-        container_logs = self.container.logs().decode('utf-8')
+        container_logs = self.logs()
         for expected_log_line in expected_log_lines:
             self.assertTrue(
                 container_logs.find(expected_log_line) > -1,
@@ -64,24 +29,24 @@ class TestUbuntu18(unittest.TestCase):
             )
 
     def test_OS(self):
-        lines = self.execRun("cat /etc/lsb-release")
+        lines = self.exec("cat /etc/lsb-release")
         for line in lines.split('\n'):
             if line.find("DISTRIB_RELEASE") > -1:
                 self.assertEqual('DISTRIB_RELEASE=18.04', line)
                 break
 
     def test_id(self):
-        self.assertEqual("root", self.execRun("whoami")[:-1])
+        self.assertEqual("10000", self.exec("whoami").strip())
 
     def test_supervisor(self):
         self.assertPackageIsInstalled("supervisor")
 
         self.assertTrue(
-            self.execRun("ps -ef").find('supervisord') > -1,
+            self.exec("ps -ef").find('supervisord') > -1,
             msg="supervisord not running"
         )
 
-        sv_log = self.execRun("ls -ld /var/log/supervisor")
+        sv_log = self.exec("ls -ld /var/log/supervisor")
         self.assertFalse(
             sv_log.find("No such file or directory") > -1,
             msg="/var/log/supervisor is missing"
@@ -92,7 +57,7 @@ class TestUbuntu18(unittest.TestCase):
         )
 
         self.assertFalse(
-            self.execRun("ls -l /etc/supervisor/supervisord.conf").find("No such file or directory") > -1,
+            self.exec("ls -l /etc/supervisor/supervisord.conf").find("No such file or directory") > -1,
             msg="/etc/supervisor/supervisord.conf is missing"
         )
 
@@ -107,7 +72,7 @@ class TestUbuntu18(unittest.TestCase):
 
     def test_apt(self):
         self.assertTrue(
-            self.execRun("ls -l /var/lib/apt/lists").find("total 0") > -1,
+            self.exec("ls -l /var/lib/apt/lists").find("total 0") > -1,
             msg="/var/lib/apt/lists should be empty"
         )
 
