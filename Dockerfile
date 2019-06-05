@@ -21,14 +21,14 @@ COPY --from=configurability /go/src/github.com/1and1internet/configurability/bin
 RUN \
 	update-alternatives --install /usr/bin/supervisord supervisord /usr/bin/supervisorgo 1 && \
   apt-get -y update && apt-get -y upgrade && \
-  apt-get -o Dpkg::Options::=--force-confdef -y install curl netcat wget telnet vim bzip2 ssmtp locales python-pip && \
+  apt-get -o Dpkg::Options::=--force-confdef -y install curl netcat wget telnet vim bzip2 ssmtp locales && \
   locale-gen en_GB.utf8 en_US.utf8 es_ES.utf8 de_DE.UTF-8 && \
   mkdir --mode 777 -p /var/log/supervisor && \
   chmod -R 777 /var/run /etc/ssmtp /etc/passwd /etc/group && \
   mkdir --mode 777 -p /tmp/sockets && \
   chmod -R 755 /init /hooks && \
   apt-get remove -y binutils* build-essential bzip2 cpp* dbus dirmngr fakeroot \
-  				 file g++* gcc-7* gnupg* gpg-* krb5-locales libalgorithm* python* && \
+  				 file g++* gcc-7* gnupg* gpg-* krb5-locales libalgorithm* && \
   apt-get -y clean && \
   rm -rf /var/lib/apt/lists/* && \
   sed -i '/^root.*/d' /etc/shadow
